@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: arithmetic-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: arithmetic-service
+  template:
+    metadata:
+      labels:
+        app: arithmetic-service
+    spec:
+      imagePullSecrets:
+        - name: acr-auth
+      containers:
+        - name: arithmetic-service
+          image: tarashacr.azurecr.io/arithmetic-service:1
+          imagePullPolicy: Always
+          env:
+            - name: PORT
+              value: "5000"
+          ports:
+            - containerPort: 8080
